@@ -17,3 +17,7 @@ class Settings(BaseSettings):
 
 def get_settings():
     return Settings()
+
+# 🚨 이 한 줄이 생명줄입니다! 
+# 함수를 실행해서 'settings'라는 실제 객체를 만들어 수출(Export)합니다.
+settings = get_settings()
