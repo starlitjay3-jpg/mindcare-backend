@@ -1,4 +1,7 @@
 from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from app.schemas import ChatRequest, ChatResponse
+from app.services.ai_service import get_counseling_response
 
 app = FastAPI(title="MindCare Backend")
 
@@ -14,3 +17,7 @@ def root():
 
 # 참고: /auth/signup 등 나머지 기능은 다음 단계에서 
 # 실제 로직(routers) 파일을 만든 후 연결할 예정입니다.
+@app.post("/chat/counsel", response_model=ChatResponse)
+async def chat_counsel(request: ChatRequest):
+    content, emotion = await get_counseling_response(request.message, request.history)
+    return ChatResponse(content=content, emotion_tag=emotion)
